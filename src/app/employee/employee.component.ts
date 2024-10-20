@@ -32,13 +32,14 @@ export class EmployeeComponent {
   get email(): AbstractControl<string> {return <AbstractControl<string>>this.employeeForm.get('email'); }
 
   onSubmit() {
+    console.log("Submitting...")
     const employee: Employee = new Employee(this.name.value,
       new Date(this.dateOfBirth.value),
       this.city.value,
       this.salary.value,
       this.gender.value,
       this.email.value);
-    this.employeeService.addEmployee(employee);
+    this.employeeService.addEmployee(employee).then(() => {console.log("success")}).catch((e) => {console.error(e)});
     this.employeeForm.reset();
     this.router.navigate(['/employees']).then(() => {});
   }
